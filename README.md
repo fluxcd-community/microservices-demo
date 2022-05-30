@@ -1,4 +1,4 @@
-# podinfo-msdemo
+# microservices-demo
 
 Microservices demo made with
 [podinfo](https://github.com/stefanprodan/podinfo),
@@ -56,7 +56,7 @@ spec:
   interval: 1m0s
   ref:
     branch: main
-  url: https://github.com/fluxcd-testing/podinfo-msdemo
+  url: https://github.com/fluxcd-testing/microservices-demo
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
@@ -87,10 +87,13 @@ spec:
           value: flux
 ```
 
+Note that the above configuration is compatible with Flux
+[multi-tenancy lockdown mode](https://fluxcd.io/docs/installation/#multi-tenancy-lockdown).
+
 ## Update microservices
 
-To trigger a rolling deployment for all microservices, add the following patch to your `msdemo` Kustomization,
-and set the [podinfo](https://github.com/stefanprodan/podinfo/releases) to version greater than `6.1.0`:
+To trigger a rolling deployment of all microservices, add the following patch to your `msdemo` Kustomization,
+and set the [podinfo](https://github.com/stefanprodan/podinfo/releases) version to value greater than `6.1.0`:
 
 ```yaml
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
@@ -105,7 +108,7 @@ spec:
       patch: |
         - op: add
           path: /spec/postBuild/substitute/app_version
-          value: 6.1.5
+          value: 6.1.4
 ```
 
 To update specific microservices, add their names to the patch target:
@@ -120,6 +123,8 @@ To update specific microservices, add their names to the patch target:
           path: /spec/postBuild/substitute/app_version
           value: 6.1.5
 ```
+
+To test rollout failures use a non existing version such as `99.0.0`.
 
 ## List microservices
 
