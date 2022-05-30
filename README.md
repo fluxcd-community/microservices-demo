@@ -7,6 +7,12 @@ and monitored by [weave-gitops](https://github.com/weaveworks/weave-gitops).
 
 ![](docs/img/weave-gitops-msdemo.png)
 
+The microservices demo is composed of 20 Kubernetes Deployments
+with a total request of `200m` CPU and `320Mi` memory.
+Each microservice is managed by a dedicated Flux Kustomization, and it contains
+a podinfo instance and a redis instance,
+the podinfo instance writes to Redis every `30s`.
+
 ## Prerequisites 
 
 * A Kubernetes cluster [bootstrapped with Flux](https://fluxcd.io/docs/installation/).
@@ -127,9 +133,6 @@ To update specific microservices, add their names to the patch target:
 To test rollout failures use a non existing version such as `99.0.0`.
 
 ## List microservices
-
-Each microservice is managed by a dedicated Flux Kustomization, and it contains
-a podinfo deployment and a Redis one, podinfo talks constantly with Redis.
 
 The above configuration will deploy the following workloads:
 
