@@ -96,6 +96,9 @@ spec:
 Note that the above configuration is compatible with Flux
 [multi-tenancy lockdown mode](https://fluxcd.io/docs/installation/#multi-tenancy-lockdown).
 
+To spin up multiple stacks, make a copy the above file, replace `msdemo` with `msdemo1` in
+the multi-doc YAML and add it to your repository.
+
 ## Update microservices
 
 To trigger a rolling deployment of all microservices, add the following patch to your `msdemo` Kustomization,
