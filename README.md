@@ -1,10 +1,10 @@
 # podinfo-msdemo
 
-Microservices demo made with podinfo
+Microservices demo made with podinfo.
 
 ![](docs/img/weave-gitops-msdemo.png)
 
-## Deploy
+## Deploy microservices
 
 Add the following definitions to the bootstrap repo under a cluster e.g. `clusters/my-cluster/msdemo.yaml`:
 
@@ -77,26 +77,46 @@ spec:
         - op: add
           path: /spec/serviceAccountName
           value: flux
-        - op: add
-          path: /spec/postBuild/substitute/app_version
-          value: 6.1.4
 ```
 
-To trigger a rolling deployment for all microservices, change the
-[podinfo](https://github.com/stefanprodan/podinfo/releases) version in:
+## Update microservices
+
+To trigger a rolling deployment for all microservices, add the following patch to your `msdemo` Kustomization,
+and set the [podinfo](https://github.com/stefanprodan/podinfo/releases) to version greater than `6.1.0`:
 
 ```yaml
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: msdemo
+  namespace: msdemo
+spec:
   patches:
     - target:
         kind: Kustomization
       patch: |
         - op: add
-          path: /spec/serviceAccountName
-          value: flux
+          path: /spec/postBuild/substitute/app_version
+          value: 6.1.5
+```
+
+To update specific microservices, add their names to the patch target:
+
+```yaml
+  patches:
+    - target:
+        kind: Kustomization
+        name: "(demo-frontend|demo-admin)"
+      patch: |
         - op: add
           path: /spec/postBuild/substitute/app_version
-          value: 6.1.4 # <-- change it to 6.1.5
+          value: 6.1.5
 ```
+
+## List microservices
+
+Each microservice is managed by a dedicated Flux Kustomization, and it contains
+a podinfo deployment and a Redis one, podinfo talks constantly with Redis.
 
 The above configuration will deploy the following workloads:
 

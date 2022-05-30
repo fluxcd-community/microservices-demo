@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: "${app_name:=demo}"
-          image: "ghcr.io/stefanprodan/podinfo:${app_version:=6.1.5}"
+          image: "ghcr.io/stefanprodan/podinfo:${app_version:=6.1.0}"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
