@@ -1,8 +1,16 @@
 # podinfo-msdemo
 
-Microservices demo made with podinfo.
+Microservices demo made with
+[podinfo](https://github.com/stefanprodan/podinfo),
+managed by [flux](https://github.com/fluxcd/flux2)
+and monitored by [weave-gitops](https://github.com/weaveworks/weave-gitops).
 
 ![](docs/img/weave-gitops-msdemo.png)
+
+## Prerequisites 
+
+* A Kubernetes cluster [bootstrapped with Flux](https://fluxcd.io/docs/installation/).
+* Weave GitOps UI [HelmRelease deployed on the cluster](https://docs.gitops.weave.works/docs/getting-started/).
 
 ## Deploy microservices
 
