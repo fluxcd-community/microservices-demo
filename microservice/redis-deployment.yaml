@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: "${app_name:=demo}-redis"
-          image: redis:6.0.1
+          image: "redis:${redis_version:=6.2.7-alpine}"
           imagePullPolicy: IfNotPresent
           command:
             - redis-server
