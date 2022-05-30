@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "${app_name:=demo}-app"
+  labels:
+    app.kubernetes.io/part-of: "${app_name:=demo}"
+  annotations:
+    app.kubernetes.io/owner: "${app_name:=demo}-team"
+spec:
+  minReadySeconds: 2
+  revisionHistoryLimit: 5
+  progressDeadlineSeconds: 60
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "${app_name:=demo}-app"
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9797"
+      labels:
+        app.kubernetes.io/name: "${app_name:=demo}-app"
+    spec:
+      containers:
+        - name: "${app_name:=demo}"
+          image: "ghcr.io/stefanprodan/podinfo:${app_version:=6.1.5}"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 9898
+              protocol: TCP
+            - name: http-metrics
+              containerPort: 9797
+              protocol: TCP
+            - name: grpc
+              containerPort: 9999
+              protocol: TCP
+          command:
+            - ./podinfo
+            - --level=info
+            - --port=9898
+            - --port-metrics=9797
+            - --grpc-port=9999
+            - --grpc-service-name=${app_name:=demo}-app
+            - --cache-server=tcp://${app_name:=demo}-redis:6379
+          livenessProbe:
+            httpGet:
+              port: http
+              path: /healthz
+          readinessProbe:
+            httpGet:
+              port: http
+              path: /readyz
+          resources:
+            limits:
+              cpu: 200m
+              memory: 128Mi
+            requests:
+              cpu: 10m
+              memory: 32Mi

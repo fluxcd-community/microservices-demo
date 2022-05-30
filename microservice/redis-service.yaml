@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "${app_name:=demo}-redis"
+  labels:
+    app.kubernetes.io/part-of: "${app_name:=demo}"
+  annotations:
+    app.kubernetes.io/owner: "${app_name:=demo}-team"
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: "${app_name:=demo}-redis"
+  ports:
+    - name: redis
+      port: 6379
+      protocol: TCP
+      targetPort: redis

@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "${app_name:=demo}-app"
+  labels:
+    app.kubernetes.io/part-of: "${app_name:=demo}"
+  annotations:
+    app.kubernetes.io/owner: "${app_name:=demo}-team"
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: "${app_name:=demo}-app"
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
+    - port: 9999
+      targetPort: grpc
+      protocol: TCP
+      name: grpc

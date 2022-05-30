@@ -1,0 +1,200 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: demo-frontend
+  namespace: "${app_namespace:=msdemo}"
+spec:
+  targetNamespace: "${app_namespace:=msdemo}"
+  interval: 60m0s
+  retryInterval: 1m30s
+  path: ./msdemo/microservice
+  prune: true
+  wait: true
+  timeout: 1m
+  sourceRef:
+    kind: GitRepository
+    name: "${app_namespace:=msdemo}"
+  postBuild:
+    substitute:
+      app_name: demo-frontend
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: demo-advert
+  namespace: "${app_namespace:=msdemo}"
+spec:
+  targetNamespace: "${app_namespace:=msdemo}"
+  interval: 60m0s
+  retryInterval: 1m30s
+  path: ./msdemo/microservice
+  prune: true
+  wait: true
+  timeout: 1m
+  sourceRef:
+    kind: GitRepository
+    name: "${app_namespace:=msdemo}"
+  postBuild:
+    substitute:
+      app_name: demo-advert
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: demo-cart
+  namespace: "${app_namespace:=msdemo}"
+spec:
+  targetNamespace: "${app_namespace:=msdemo}"
+  interval: 60m0s
+  retryInterval: 1m30s
+  path: ./msdemo/microservice
+  prune: true
+  wait: true
+  timeout: 1m
+  sourceRef:
+    kind: GitRepository
+    name: "${app_namespace:=msdemo}"
+  postBuild:
+    substitute:
+      app_name: demo-cart
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: demo-checkout
+  namespace: "${app_namespace:=msdemo}"
+spec:
+  targetNamespace: "${app_namespace:=msdemo}"
+  interval: 60m0s
+  retryInterval: 1m30s
+  path: ./msdemo/microservice
+  prune: true
+  wait: true
+  timeout: 1m
+  sourceRef:
+    kind: GitRepository
+    name: "${app_namespace:=msdemo}"
+  postBuild:
+    substitute:
+      app_name: demo-checkout
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: demo-payment
+  namespace: "${app_namespace:=msdemo}"
+spec:
+  targetNamespace: "${app_namespace:=msdemo}"
+  interval: 60m0s
+  retryInterval: 1m30s
+  path: ./msdemo/microservice
+  prune: true
+  wait: true
+  timeout: 1m
+  sourceRef:
+    kind: GitRepository
+    name: "${app_namespace:=msdemo}"
+  postBuild:
+    substitute:
+      app_name: demo-payment
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: demo-catalogue
+  namespace: "${app_namespace:=msdemo}"
+spec:
+  targetNamespace: "${app_namespace:=msdemo}"
+  interval: 60m0s
+  retryInterval: 1m30s
+  path: ./msdemo/microservice
+  prune: true
+  wait: true
+  timeout: 1m
+  sourceRef:
+    kind: GitRepository
+    name: "${app_namespace:=msdemo}"
+  postBuild:
+    substitute:
+      app_name: demo-catalogue
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: demo-shipping
+  namespace: "${app_namespace:=msdemo}"
+spec:
+  targetNamespace: "${app_namespace:=msdemo}"
+  interval: 60m0s
+  retryInterval: 1m30s
+  path: ./msdemo/microservice
+  prune: true
+  wait: true
+  timeout: 1m
+  sourceRef:
+    kind: GitRepository
+    name: "${app_namespace:=msdemo}"
+  postBuild:
+    substitute:
+      app_name: demo-shipping
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: demo-auth
+  namespace: "${app_namespace:=msdemo}"
+spec:
+  targetNamespace: "${app_namespace:=msdemo}"
+  interval: 60m0s
+  retryInterval: 1m30s
+  path: ./msdemo/microservice
+  prune: true
+  wait: true
+  timeout: 1m
+  sourceRef:
+    kind: GitRepository
+    name: "${app_namespace:=msdemo}"
+  postBuild:
+    substitute:
+      app_name: demo-auth
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: demo-mobile
+  namespace: "${app_namespace:=msdemo}"
+spec:
+  targetNamespace: "${app_namespace:=msdemo}"
+  interval: 60m0s
+  retryInterval: 1m30s
+  path: ./msdemo/microservice
+  prune: true
+  wait: true
+  timeout: 1m
+  sourceRef:
+    kind: GitRepository
+    name: "${app_namespace:=msdemo}"
+  postBuild:
+    substitute:
+      app_name: demo-mobile
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: demo-admin
+  namespace: "${app_namespace:=msdemo}"
+spec:
+  targetNamespace: "${app_namespace:=msdemo}"
+  interval: 60m0s
+  retryInterval: 1m30s
+  path: ./msdemo/microservice
+  prune: true
+  wait: true
+  timeout: 1m
+  sourceRef:
+    kind: GitRepository
+    name: "${app_namespace:=msdemo}"
+  postBuild:
+    substitute:
+      app_name: demo-admin

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "${app_name:=demo}-redis"
+  labels:
+    app.kubernetes.io/part-of: "${app_name:=demo}"
+  annotations:
+    app.kubernetes.io/owner: "${app_name:=demo}-team"
+data:
+  redis.conf: |
+    maxmemory 64mb
+    maxmemory-policy allkeys-lru
+    save ""
+    appendonly no
