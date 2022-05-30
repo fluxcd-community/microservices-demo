@@ -8,7 +8,7 @@ spec:
   targetNamespace: "${app_namespace:=msdemo}"
   interval: 60m0s
   retryInterval: 1m30s
-  path: ./msdemo/microservice
+  path: ./microservice
   prune: true
   wait: true
   timeout: 1m
@@ -28,7 +28,7 @@ spec:
   targetNamespace: "${app_namespace:=msdemo}"
   interval: 60m0s
   retryInterval: 1m30s
-  path: ./msdemo/microservice
+  path: ./microservice
   prune: true
   wait: true
   timeout: 1m
@@ -48,7 +48,7 @@ spec:
   targetNamespace: "${app_namespace:=msdemo}"
   interval: 60m0s
   retryInterval: 1m30s
-  path: ./msdemo/microservice
+  path: ./microservice
   prune: true
   wait: true
   timeout: 1m
@@ -68,7 +68,7 @@ spec:
   targetNamespace: "${app_namespace:=msdemo}"
   interval: 60m0s
   retryInterval: 1m30s
-  path: ./msdemo/microservice
+  path: ./microservice
   prune: true
   wait: true
   timeout: 1m
@@ -88,7 +88,7 @@ spec:
   targetNamespace: "${app_namespace:=msdemo}"
   interval: 60m0s
   retryInterval: 1m30s
-  path: ./msdemo/microservice
+  path: ./microservice
   prune: true
   wait: true
   timeout: 1m
@@ -108,7 +108,7 @@ spec:
   targetNamespace: "${app_namespace:=msdemo}"
   interval: 60m0s
   retryInterval: 1m30s
-  path: ./msdemo/microservice
+  path: ./microservice
   prune: true
   wait: true
   timeout: 1m
@@ -128,7 +128,7 @@ spec:
   targetNamespace: "${app_namespace:=msdemo}"
   interval: 60m0s
   retryInterval: 1m30s
-  path: ./msdemo/microservice
+  path: ./microservice
   prune: true
   wait: true
   timeout: 1m
@@ -148,7 +148,7 @@ spec:
   targetNamespace: "${app_namespace:=msdemo}"
   interval: 60m0s
   retryInterval: 1m30s
-  path: ./msdemo/microservice
+  path: ./microservice
   prune: true
   wait: true
   timeout: 1m
@@ -168,7 +168,7 @@ spec:
   targetNamespace: "${app_namespace:=msdemo}"
   interval: 60m0s
   retryInterval: 1m30s
-  path: ./msdemo/microservice
+  path: ./microservice
   prune: true
   wait: true
   timeout: 1m
@@ -188,7 +188,7 @@ spec:
   targetNamespace: "${app_namespace:=msdemo}"
   interval: 60m0s
   retryInterval: 1m30s
-  path: ./msdemo/microservice
+  path: ./microservice
   prune: true
   wait: true
   timeout: 1m
