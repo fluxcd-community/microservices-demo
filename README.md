@@ -56,7 +56,7 @@ spec:
   interval: 1m0s
   ref:
     branch: main
-  url: https://github.com/fluxcd-testing/microservices-demo
+  url: https://github.com/fluxcd-community/microservices-demo
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
