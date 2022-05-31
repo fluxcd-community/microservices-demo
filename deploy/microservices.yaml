@@ -18,6 +18,20 @@ spec:
   postBuild:
     substitute:
       app_name: demo-frontend
+  patches:
+    - target:
+        kind: Deployment
+        labelSelector: "app.kubernetes.io/component=app"
+      patch: |
+        - op: add
+          path: /spec/template/spec/containers/0/command/-
+          value: --backend-url=http://demo-cart-app/echo
+        - op: add
+          path: /spec/template/spec/containers/0/command/-
+          value: --backend-url=http://demo-checkout-app/echo
+        - op: add
+          path: /spec/template/spec/containers/0/command/-
+          value: --backend-url=http://demo-catalogue-app/echo
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization

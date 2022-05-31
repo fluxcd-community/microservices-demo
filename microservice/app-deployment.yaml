@@ -4,6 +4,7 @@ metadata:
   name: "${app_name:=demo}-app"
   labels:
     app.kubernetes.io/part-of: "${app_name:=demo}"
+    app.kubernetes.io/component: app
   annotations:
     app.kubernetes.io/owner: "${app_name:=demo}-team"
 spec:

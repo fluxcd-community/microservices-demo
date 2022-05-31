@@ -28,6 +28,7 @@ spec:
               while true; do
                 hey -z 10m -q 1 -c 1 http://demo-frontend-app &
                 hey -z 10m -q 1 -c 1 -H 'X-Canary: insider' http://demo-frontend-app &
+                hey -z 10m -q 1 -c 2 -m POST -d '{a="b"}' http://demo-frontend-app/api/echo &
                 hey -z 10m -q 1 -c 2 -m POST -d 'a' http://demo-auth-app/token &
                 hey -z 10m -q 1 -c 2 -m POST -d 'a' http://demo-payment-app/token &
                 hey -z 10m -q 1 -c 2 -m POST -d 'a' http://demo-admin-app/echo &
