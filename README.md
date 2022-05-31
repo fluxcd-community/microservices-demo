@@ -102,7 +102,7 @@ the multi-doc YAML and add it to your repository.
 ## Update microservices
 
 To trigger a rolling deployment of all microservices, add the following patch to your `msdemo` Kustomization,
-and set the [podinfo](https://github.com/stefanprodan/podinfo/releases) version to value greater than `6.1.0`:
+and set the [podinfo](https://github.com/stefanprodan/podinfo/releases) version to value greater than `6.1.3`:
 
 ```yaml
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
@@ -117,7 +117,7 @@ spec:
       patch: |
         - op: add
           path: /spec/postBuild/substitute/app_version
-          value: 6.1.4
+          value: 6.1.5
 ```
 
 To update specific microservices, add their names to the patch target:
@@ -130,7 +130,7 @@ To update specific microservices, add their names to the patch target:
       patch: |
         - op: add
           path: /spec/postBuild/substitute/app_version
-          value: 6.1.5
+          value: 6.1.6
 ```
 
 To test rollout failures use a non existing version such as `99.0.0`.
