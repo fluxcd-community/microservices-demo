@@ -29,8 +29,8 @@ spec:
                 hey -z 10m -q 1 -c 1 http://demo-frontend-app &
                 hey -z 10m -q 1 -c 1 -H 'X-Canary: insider' http://demo-frontend-app &
                 hey -z 10m -q 1 -c 2 -m POST -d '{a="b"}' http://demo-frontend-app/api/echo &
-                hey -z 10m -q 1 -c 2 -m POST -d 'a' http://demo-admin-app/token &
-                hey -z 10m -q 1 -c 2 -m POST -d '{a="b"}' http://demo-mobile-app/api/echo &
+                hey -z 10m -q 1 -c 1 -m POST -d '{a="b"}' http://demo-mobile-app/api/echo &
+                hey -z 10m -q 1 -c 1 -m POST -d '{a="b"}' http://demo-admin-app/api/echo &
                 hey -z 10m -q 1 -c 1 http://demo-advert-app/status/500 &
                 hey -z 10m -q 1 -c 1 http://demo-advert-app/status/404 &
                 hey -z 10m -q 1 -c 1 http://demo-advert-app/swagger.json &

@@ -28,10 +28,38 @@ spec:
           value: --backend-url=http://demo-auth-app/echo
         - op: add
           path: /spec/template/spec/containers/0/command/-
-          value: --backend-url=http://demo-checkout-app/echo
+          value: --backend-url=http://demo-cart-app/echo
         - op: add
           path: /spec/template/spec/containers/0/command/-
           value: --backend-url=http://demo-catalogue-app/echo
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: demo-cart
+  namespace: "${app_namespace:=msdemo}"
+spec:
+  targetNamespace: "${app_namespace:=msdemo}"
+  interval: 60m0s
+  retryInterval: 1m30s
+  path: ./microservice
+  prune: true
+  wait: true
+  timeout: 1m
+  sourceRef:
+    kind: GitRepository
+    name: "${app_namespace:=msdemo}"
+  postBuild:
+    substitute:
+      app_name: demo-cart
+  patches:
+    - target:
+        kind: Deployment
+        labelSelector: "app.kubernetes.io/component=app"
+      patch: |
+        - op: add
+          path: /spec/template/spec/containers/0/command/-
+          value: --backend-url=http://demo-checkout-app/echo
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
@@ -59,9 +87,6 @@ spec:
       patch: |
         - op: add
           path: /spec/template/spec/containers/0/command/-
-          value: --backend-url=http://demo-cart-app/echo
-        - op: add
-          path: /spec/template/spec/containers/0/command/-
           value: --backend-url=http://demo-shipping-app/echo
         - op: add
           path: /spec/template/spec/containers/0/command/-
@@ -86,26 +111,6 @@ spec:
   postBuild:
     substitute:
       app_name: demo-advert
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: demo-cart
-  namespace: "${app_namespace:=msdemo}"
-spec:
-  targetNamespace: "${app_namespace:=msdemo}"
-  interval: 60m0s
-  retryInterval: 1m30s
-  path: ./microservice
-  prune: true
-  wait: true
-  timeout: 1m
-  sourceRef:
-    kind: GitRepository
-    name: "${app_namespace:=msdemo}"
-  postBuild:
-    substitute:
-      app_name: demo-cart
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
@@ -206,6 +211,14 @@ spec:
   postBuild:
     substitute:
       app_name: demo-mobile
+  patches:
+    - target:
+        kind: Deployment
+        labelSelector: "app.kubernetes.io/component=app"
+      patch: |
+        - op: add
+          path: /spec/template/spec/containers/0/command/-
+          value: --backend-url=http://demo-auth-app/echo
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
@@ -226,3 +239,11 @@ spec:
   postBuild:
     substitute:
       app_name: demo-admin
+  patches:
+    - target:
+        kind: Deployment
+        labelSelector: "app.kubernetes.io/component=app"
+      patch: |
+        - op: add
+          path: /spec/template/spec/containers/0/command/-
+          value: --backend-url=http://demo-auth-app/echo
