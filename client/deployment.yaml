@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "${app_name:=demo}-app"
+  labels:
+    app.kubernetes.io/part-of: "${app_name:=demo}"
+  annotations:
+    app.kubernetes.io/owner: "${app_name:=demo}-team"
+spec:
+  revisionHistoryLimit: 5
+  progressDeadlineSeconds: 60
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "${app_name:=demo}-app"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "${app_name:=demo}-app"
+    spec:
+      containers:
+        - name: "${app_name:=demo}"
+          image: ghcr.io/fluxcd/flagger-loadtester:0.22.0
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+            - -c
+            - |
+              while true; do
+                hey -z 10m -q 1 -c 1 http://demo-frontend-app &
+                hey -z 10m -q 1 -c 1 -H 'X-Canary: insider' http://demo-frontend-app &
+                hey -z 10m -q 1 -c 2 -m POST -d 'a' http://demo-auth-app/token &
+                hey -z 10m -q 1 -c 2 -m POST -d 'a' http://demo-payment-app/token &
+                hey -z 10m -q 1 -c 2 -m POST -d 'a' http://demo-admin-app/echo &
+                hey -z 10m -q 1 -c 2 -m POST -d '{a="b"}' http://demo-mobile-app/api/echo &
+                hey -z 10m -q 1 -c 2 http://demo-shipping-app/env &
+                hey -z 10m -q 1 -c 2 http://demo-advert-app/swagger.json &
+                hey -z 10m -q 1 -c 2 http://demo-shipping-app/version &
+                hey -z 10m -q 1 -c 2 http://demo-catalogue-app/headers &
+                hey -z 10m -q 1 -c 2 http://demo-advert-app/status/500 &
+                wait
+                sleep 1
+              done
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            requests:
+              cpu: 10m
+              memory: 16Mi
