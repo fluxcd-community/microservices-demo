@@ -33,10 +33,12 @@ spec:
                 hey -z 10m -q 1 -c 2 -m POST -d 'a' http://demo-admin-app/echo &
                 hey -z 10m -q 1 -c 2 -m POST -d '{a="b"}' http://demo-mobile-app/api/echo &
                 hey -z 10m -q 1 -c 2 http://demo-shipping-app/env &
-                hey -z 10m -q 1 -c 2 http://demo-advert-app/swagger.json &
+                hey -z 10m -q 1 -c 2 http://demo-cart-app/api/info &
                 hey -z 10m -q 1 -c 2 http://demo-shipping-app/version &
                 hey -z 10m -q 1 -c 2 http://demo-catalogue-app/headers &
-                hey -z 10m -q 1 -c 2 http://demo-advert-app/status/500 &
+                hey -z 10m -q 1 -c 1 http://demo-advert-app/status/500 &
+                hey -z 10m -q 1 -c 1 http://demo-advert-app/status/404 &
+                hey -z 10m -q 1 -c 1 http://demo-advert-app/swagger.json &
                 wait
                 sleep 1
               done
