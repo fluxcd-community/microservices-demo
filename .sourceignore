@@ -1,0 +1,5 @@
+# Flux ignore
+# https://fluxcd.io/docs/components/source/gitrepositories/#excluding-files
+*.md
+.github/
+docs/
