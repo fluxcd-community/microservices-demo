@@ -7,10 +7,10 @@ and monitored by [weave-gitops](https://github.com/weaveworks/weave-gitops).
 
 ![](docs/img/weave-gitops-msdemo.png)
 
-The microservices demo is composed of 20 Kubernetes Deployments
+The microservices demo is composed of `20` Kubernetes Deployments
 with a total request of `200m` CPU and `320Mi` memory.
-Each microservice is managed by a dedicated Flux Kustomization, and it contains
-a podinfo instance and a redis instance. The microservices are configured to
+Each microservice is managed by a dedicated Flux Kustomization that contains
+a Podinfo and a Redis instance. The microservices are configured to
 scale up to `2` pods each, using CPU-based horizontal pod autoscalers.
 
 ![](docs/img/linkerd-msdemo.png)
@@ -147,7 +147,9 @@ To test rollout failures use a non-existing version such as `99.0.0`.
 
 ## Increase the traffic load
 
-To increase the traffic load, you can set the QPS value with:
+![](docs/img/traffic-msdemo.png)
+
+To increase the traffic load, you can set the client QPS value with:
 
 ```yaml
   patches:
