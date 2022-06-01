@@ -1,0 +1,113 @@
+name: flux-e2e
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ '*' ]
+    tags-ignore: [ '*' ]
+
+jobs:
+  kubernetes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Flux
+        uses: fluxcd/flux2/action@main
+      - name: Setup Kubernetes
+        uses: engineerd/setup-kind@v0.5.0
+        with:
+          version: v0.14.0
+      - name: Install Flux in Kubernetes Kind
+        run: flux install
+      - name: Setup cluster reconciliation
+        run: |
+          kubectl apply -f - <<EOF > cat
+          ---
+          apiVersion: v1
+          kind: Namespace
+          metadata:
+            name: msdemo
+            annotations:
+              config.linkerd.io/proxy-await: enabled
+              linkerd.io/inject: enabled
+          ---
+          apiVersion: source.toolkit.fluxcd.io/v1beta2
+          kind: GitRepository
+          metadata:
+            name: msdemo
+            namespace: msdemo
+          spec:
+            interval: 15m
+            ref:
+              branch: ${GITHUB_REF#refs/heads/}
+            url: ${{ github.event.repository.html_url }}
+            ignore: |
+              /clusters/**/flux-system/
+          ---
+          apiVersion: v1
+          kind: ServiceAccount
+          metadata:
+            labels:
+              toolkit.fluxcd.io/tenant: msdemo
+            name: flux
+            namespace: msdemo
+          ---
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: RoleBinding
+          metadata:
+            labels:
+              toolkit.fluxcd.io/tenant: msdemo
+            name: flux
+            namespace: msdemo
+          roleRef:
+            apiGroup: rbac.authorization.k8s.io
+            kind: ClusterRole
+            name: cluster-admin
+          subjects:
+            - kind: ServiceAccount
+              name: flux
+              namespace: msdemo
+          ---
+          apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+          kind: Kustomization
+          metadata:
+            name: msdemo
+            namespace: msdemo
+          spec:
+            targetNamespace: msdemo
+            interval: 60m0s
+            retryInterval: 1m30s
+            path: ./deploy
+            prune: true
+            wait: true
+            timeout: 3m
+            serviceAccountName: flux
+            sourceRef:
+              kind: GitRepository
+              name: msdemo
+            postBuild:
+              substitute:
+                app_namespace: msdemo
+            patches:
+              - target:
+                  kind: Kustomization
+                patch: |
+                  - op: add
+                    path: /spec/serviceAccountName
+                    value: flux
+          EOF
+      - name: Wait for msdemo reconciliation
+        run: |
+          kubectl -n msdemo wait gitrepository/msdemo --for=condition=ready --timeout=1m
+          kubectl -n msdemo wait kustomization/msdemo --for=condition=ready --timeout=3m
+      - name: Flux status
+        run: |
+          flux -n msdemo get all
+      - name: Debug failure
+        if: failure()
+        run: |
+          flux get all --all-namespaces
+          kubectl -n msdemo get all
+          kubectl -n flux-system logs deploy/source-controller
+          kubectl -n flux-system logs deploy/kustomize-controller

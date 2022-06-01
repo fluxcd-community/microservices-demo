@@ -1,5 +1,8 @@
 # microservices-demo
 
+[![flux-e2e](https://github.com/fluxcd-community/microservices-demo/workflows/flux-e2e/badge.svg)](https://github.com/fluxcd-community/microservices-demo/actions)
+[![license](https://img.shields.io/github/license/fluxcd-community/microservices-demo.svg)](https://github.com/fluxcd-community/microservices-demo/blob/main/LICENSE)
+
 Microservices demo made with
 [podinfo](https://github.com/stefanprodan/podinfo),
 managed by [flux](https://github.com/fluxcd/flux2)
@@ -92,7 +95,7 @@ spec:
   path: ./deploy
   prune: true
   wait: true
-  timeout: 2m
+  timeout: 3m
   serviceAccountName: flux
   sourceRef:
     kind: GitRepository
@@ -110,7 +113,8 @@ spec:
 ```
 
 Note that the above configuration is compatible with Flux
-[multi-tenancy lockdown mode](https://fluxcd.io/docs/installation/#multi-tenancy-lockdown).
+[multi-tenancy lockdown mode](https://fluxcd.io/docs/installation/#multi-tenancy-lockdown)
+and is being tested in GitHub Actions by the [flux-e2e workflow](.github/workflows/flux-e2e.yaml).
 
 To spin up multiple stacks, make a copy the above file, replace `msdemo` with `msdemo1` in
 the multi-doc YAML and add it to your repository.
