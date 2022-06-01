@@ -10,8 +10,14 @@ and monitored by [weave-gitops](https://github.com/weaveworks/weave-gitops).
 The microservices demo is composed of 20 Kubernetes Deployments
 with a total request of `200m` CPU and `320Mi` memory.
 Each microservice is managed by a dedicated Flux Kustomization, and it contains
-a podinfo instance and a redis instance,
-the podinfo instance writes to Redis every `30s`.
+a podinfo instance and a redis instance. The microservices are configured to
+scale to a maximum of `2` pods, using CPU-based horizontal pod autoscalers.
+
+![](docs/img/linkerd-msdemo.png)
+
+The microservices demo comes with a client app that generates HTTP/S
+traffic between microservices at a total rate of `30` requests/second.
+Each microservice writes data in their dedicated Redis instance every `30s`
 
 ## Prerequisites 
 
@@ -184,6 +190,8 @@ Kustomization/msdemo/msdemo
 │   ├── Deployment/msdemo/demo-checkout-app
 │   ├── Deployment/msdemo/demo-checkout-redis
 │   └── HorizontalPodAutoscaler/msdemo/demo-checkout-app
+├── Kustomization/msdemo/demo-client
+│   └── Deployment/msdemo/demo-client-app
 ├── Kustomization/msdemo/demo-frontend
 │   ├── ConfigMap/msdemo/demo-frontend-redis
 │   ├── Service/msdemo/demo-frontend-app
