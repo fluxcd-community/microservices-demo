@@ -11,18 +11,19 @@ The microservices demo is composed of 20 Kubernetes Deployments
 with a total request of `200m` CPU and `320Mi` memory.
 Each microservice is managed by a dedicated Flux Kustomization, and it contains
 a podinfo instance and a redis instance. The microservices are configured to
-scale to a maximum of `2` pods, using CPU-based horizontal pod autoscalers.
+scale up to `2` pods each, using CPU-based horizontal pod autoscalers.
 
 ![](docs/img/linkerd-msdemo.png)
 
 The microservices demo comes with a client app that generates HTTP/S
 traffic between microservices at a total rate of `30` requests/second.
-Each microservice writes data in their dedicated Redis instance every `30s`
+Each microservice writes data in their dedicated Redis instance every `30s`.
 
 ## Prerequisites 
 
 * A Kubernetes cluster [bootstrapped with Flux](https://fluxcd.io/docs/installation/).
 * Weave GitOps UI [HelmRelease deployed on the cluster](https://docs.gitops.weave.works/docs/getting-started/).
+* Linkerd [HelmRelease deployed on the cluster](https://github.com/stefanprodan/gitops-linkerd/tree/main/infrastructure/linkerd) (optionally).
 
 ## Deploy microservices
 
@@ -34,6 +35,9 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: msdemo
+  annotations:
+    config.linkerd.io/proxy-await: enabled
+    linkerd.io/inject: enabled
 ---
 apiVersion: v1
 kind: ServiceAccount
