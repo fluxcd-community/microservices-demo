@@ -18,3 +18,4 @@ spec:
   postBuild:
     substitute:
       app_name: demo-client
+      #qps: "1"

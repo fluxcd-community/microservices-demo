@@ -143,7 +143,22 @@ To update specific microservices, add their names to the patch target:
           value: 6.1.6
 ```
 
-To test rollout failures use a non existing version such as `99.0.0`.
+To test rollout failures use a non-existing version such as `99.0.0`.
+
+## Increase the traffic load
+
+To increase the traffic load, you can set the QPS value with:
+
+```yaml
+  patches:
+    - target:
+        kind: Kustomization
+        name: "(demo-client)"
+      patch: |
+        - op: add
+          path: /spec/postBuild/substitute/qps
+          value: "2"
+```
 
 ## List microservices
 
