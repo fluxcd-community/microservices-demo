@@ -19,6 +19,8 @@ The microservices demo comes with a client app that generates HTTP/S
 traffic between microservices at a total rate of `30` requests/second.
 Each microservice writes data in their dedicated Redis instance every `30s`.
 
+![](docs/img/traffic-msdemo.png)
+
 ## Prerequisites 
 
 * A Kubernetes cluster [bootstrapped with Flux](https://fluxcd.io/docs/installation/).
@@ -147,8 +149,6 @@ To test rollout failures use a non-existing version such as `99.0.0`.
 
 ## Increase the traffic load
 
-![](docs/img/traffic-msdemo.png)
-
 To increase the traffic load, you can set the client QPS value with:
 
 ```yaml
@@ -161,6 +161,9 @@ To increase the traffic load, you can set the client QPS value with:
           path: /spec/postBuild/substitute/qps
           value: "2"
 ```
+
+Note that half of the requests made by the client to the advert service result in 500 and 404 HTTP errors,
+this can be used to showcase Flagger rollbacks.
 
 ## List microservices
 
