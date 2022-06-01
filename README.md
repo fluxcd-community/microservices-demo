@@ -21,11 +21,15 @@ Each microservice writes data in their dedicated Redis instance every `30s`.
 
 ![](docs/img/traffic-msdemo.png)
 
+Note that half of the requests made by the client to the advert service result in
+500 and 404 HTTP errors, this can be used to showcase [Flagger](https://flagger.app) automated rollback.
+
 ## Prerequisites 
 
 * A Kubernetes cluster [bootstrapped with Flux](https://fluxcd.io/docs/installation/).
 * Weave GitOps UI [HelmRelease deployed on the cluster](https://docs.gitops.weave.works/docs/getting-started/).
 * Linkerd [HelmRelease deployed on the cluster](https://github.com/stefanprodan/gitops-linkerd/tree/main/infrastructure/linkerd) (optionally).
+* Flagger [configured for Linkerd](https://github.com/stefanprodan/gitops-linkerd/tree/main/infrastructure/flagger) (optionally).
 
 ## Deploy microservices
 
@@ -161,9 +165,6 @@ To increase the traffic load, you can set the client QPS value with:
           path: /spec/postBuild/substitute/qps
           value: "2"
 ```
-
-Note that half of the requests made by the client to the advert service result in 500 and 404 HTTP errors,
-this can be used to showcase Flagger rollbacks.
 
 ## List microservices
 
