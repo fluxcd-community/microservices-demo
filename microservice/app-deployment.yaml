@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/owner: "${app_name:=demo}-team"
 spec:
   minReadySeconds: 2
-  revisionHistoryLimit: 5
+  revisionHistoryLimit: 2
   progressDeadlineSeconds: 60
   selector:
     matchLabels:
